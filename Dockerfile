@@ -2,6 +2,10 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/runtime:10.0 AS base
+
+#Install streamlink and ffmpeg
+RUN apt-get update && apt-get install -y streamlink ffmpeg
+
 USER $APP_UID
 WORKDIR /app
 
