@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TwitchRestreamer": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
