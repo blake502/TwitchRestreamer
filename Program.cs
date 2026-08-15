@@ -151,7 +151,7 @@ namespace TwitchRestreamer
                 string line = "[" + timestamp + "] " + e.Data;
 
                 Console.WriteLine(line);
-                errorLog.Write(line);
+                errorLog.Write(line + "\n");
             };
 
             process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
@@ -164,7 +164,7 @@ namespace TwitchRestreamer
                 string line = "[" + timestamp + "] " + e.Data;
 
                 Console.WriteLine(line);
-                outputLog.Write(line);
+                outputLog.Write(line + "\n");
             };
 
             process.Start();
