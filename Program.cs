@@ -131,14 +131,40 @@ namespace TwitchRestreamer
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
 
-            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
+            using var outputLog = new StreamWriter("logs/output.log", true)
             {
-                Console.WriteLine(e.Data);
+                AutoFlush = true
             };
 
-            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) => 
+            using var errorLog = new StreamWriter("logs/error.log", true)
             {
-                Console.WriteLine(e.Data);
+                AutoFlush = true
+            };
+
+            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
+            {
+                if (e.Data == null)
+                    return;
+
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                string line = "[" + timestamp + "] " + e.Data;
+
+                Console.WriteLine(line);
+                errorLog.Write(line);
+            };
+
+            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
+            {
+                if (e.Data == null)
+                    return;
+
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                string line = "[" + timestamp + "] " + e.Data;
+
+                Console.WriteLine(line);
+                outputLog.Write(line);
             };
 
             process.Start();
